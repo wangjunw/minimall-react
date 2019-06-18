@@ -1,3 +1,6 @@
 import { combineReducers } from 'redux';
-const reducers = combineReducers({});
+import headerReducer, {key as headerKey} from '../components/header/HeaderContainer'
+const reducers = combineReducers({
+    [headerKey]: headerReducer
+});
 export default reducers;

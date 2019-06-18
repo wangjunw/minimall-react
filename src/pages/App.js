@@ -2,7 +2,7 @@ import React from 'react';
 import renderRoutes from '../routes/renderRoutes';
 import styled from 'styled-components';
 import routes from '../routes/routes';
-// import Header from '../components/header';
+import Header from '../components/header';
 import Footer from '../components/footer';
 const AppContainer = styled.div`
     background-color: #f5f7fc;
@@ -11,7 +11,7 @@ const AppContainer = styled.div`
 function App() {
     return (
         <AppContainer>
-            {/* <Header /> */}
+            <Header />
             {renderRoutes(routes)}
             <Footer />
         </AppContainer>

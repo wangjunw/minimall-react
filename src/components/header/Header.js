@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Logo from '../static/images/logo.png'
+// import Logo from '../static/images/logo.png'
 const HeaderContainer = styled.div`
     max-width: 1280px;
     margin: 0 auto;
@@ -12,7 +12,7 @@ class Header extends React.PureComponent{
         return (
             <div>
                 <HeaderContainer>
-                    <img src={Logo} alt=""/>
+                    {/* <img src={Logo} alt=""/> */}
                 </HeaderContainer>
             </div>
         )
