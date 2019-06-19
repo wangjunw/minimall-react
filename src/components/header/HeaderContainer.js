@@ -1,59 +1,57 @@
-import {$get, $post} from '../../utils/request'
+import { _get, _post } from '../../utils/request';
 export const key = 'header';
 const LOGIN = `${key}/LOGIN`;
 const LOGIN_SUCCESS = `${key}/LOGIN_SUCCESS`;
 const LOGOUT = `${key}/LOGOUT`;
 const LOGOUT_SUCCESS = `${key}/LOGOUT_SUCCESS`;
 const FAILURE = `${key}/FAILURE`;
-const initialState = {
-
-}
-const login = ()=> ({
+const initialState = {};
+const login = () => ({
     type: LOGIN
-})
-const failure = ()=>({
+});
+const failure = () => ({
     type: FAILURE
-})
+});
 const loginSuccess = res => ({
     type: LOGIN_SUCCESS,
     payload: res
-})
-const loginHandler = (username,password)=> {
-    return dispatch =>{
+});
+const loginHandler = (username, password) => {
+    return dispatch => {
         dispatch(login());
-        return $post('/user/login',{
+        return _post('/user/login', {
             username,
             password
-        }).then(res=>{
-            dispatch(loginSuccess(res));
-        }).catch(()=>{
-            dispatch(failure());
-        });
-    }
-}
-const logoutHandler = ()=>{
-
-}
-export const actions = {loginHandler,logoutHandler}
-const headerReducer = (state = initialState,action)=>{
-    switch(action.type){
+        })
+            .then(res => {
+                dispatch(loginSuccess(res));
+            })
+            .catch(() => {
+                dispatch(failure());
+            });
+    };
+};
+const logoutHandler = () => {};
+export const actions = { loginHandler, logoutHandler };
+const headerReducer = (state = initialState, action) => {
+    switch (action.type) {
         case 'LOGIN':
             return {
                 ...state
-            }
+            };
         case 'LOGIN_SUCCESS':
             return {
-                ...state,
-            }
+                ...state
+            };
         case 'FAILURE':
             return {
                 ...state
-            }
+            };
         default:
             return {
                 ...state
-            }
+            };
     }
-}
+};
 
 export default headerReducer;
