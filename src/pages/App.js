@@ -6,7 +6,7 @@ import Header from '../components/header';
 import Footer from '../components/footer';
 const AppContainer = styled.div`
     background-color: #f5f7fc;
-    height: 100vh;
+    min-height: 100vh;
 `;
 function App() {
     return (

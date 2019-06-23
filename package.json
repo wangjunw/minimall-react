@@ -21,12 +21,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
-    "proxy": {
-        "/api": {
-            "target": "127.0.0.1:8080",
-            "changeOrigin": true
-        }
-    },
+    "proxy": "http://127.0.0.1:8080",
     "eslintConfig": {
         "extends": "react-app"
     },

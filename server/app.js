@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const mongoose = require('mongoose');
 const {
     serverPort,
@@ -9,6 +10,8 @@ const {
 } = require('./config/config');
 const goodsRoute = require('./routes/goods');
 
+// 设置静态资源（注意：请在当前目录下启动app.js，在外层启动会有问题）
+app.use(express.static('static'));
 // 连接数据库
 mongoose.connect(`mongodb://${hostname}:${mongodbPort}/${dbName}`);
 mongoose.connection.on('connected', () => {
