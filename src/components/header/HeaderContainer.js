@@ -1,11 +1,14 @@
-import { _get, _post } from '../../utils/request';
+import { _post } from '../../utils/request';
 export const key = 'header';
 const LOGIN = `${key}/LOGIN`;
 const LOGIN_SUCCESS = `${key}/LOGIN_SUCCESS`;
 const LOGOUT = `${key}/LOGOUT`;
 const LOGOUT_SUCCESS = `${key}/LOGOUT_SUCCESS`;
 const FAILURE = `${key}/FAILURE`;
-const initialState = {};
+const initialState = {
+    userInfo: {},
+    authed: false
+};
 const login = () => ({
     type: LOGIN
 });
@@ -16,12 +19,12 @@ const loginSuccess = res => ({
     type: LOGIN_SUCCESS,
     payload: res
 });
-const loginHandler = (username, password) => {
+const loginHandler = () => {
     return dispatch => {
         dispatch(login());
         return _post('/user/login', {
-            username,
-            password
+            username: 'admin',
+            password: 'admin'
         })
             .then(res => {
                 dispatch(loginSuccess(res));

@@ -1,21 +1,44 @@
 import React from 'react';
-import styled from 'styled-components';
-// import Logo from '../static/images/logo.png'
-const HeaderContainer = styled.div`
-    max-width: 1280px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-`
-class Header extends React.PureComponent{
-    render(){
+import PropTypes from 'prop-types';
+import avatar from '../../static/images/avatar.jpg';
+import '../../static/styles/header.scss';
+class Header extends React.PureComponent {
+    render() {
         return (
             <div>
-                <HeaderContainer>
-                    {/* <img src={Logo} alt=""/> */}
-                </HeaderContainer>
+                <div className="headerContainer">
+                    <div className="content">
+                        <img src={avatar} alt="" className="avatar" />
+                        <div className="user">
+                            {this.props.authed ? (
+                                <p className="log">
+                                    {this.props.userInfo.userName}
+                                    <span onClick={this.props.loginHandler}>
+                                        Logout
+                                    </span>
+                                </p>
+                            ) : (
+                                <p
+                                    onClick={this.props.loginHandler}
+                                    className="log"
+                                >
+                                    Login
+                                </p>
+                            )}
+                            <div className="cart">
+                                <span className="cartNum">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        )
+        );
     }
 }
+Header.propTypes = {
+    authed: PropTypes.bool.isRequired,
+    userInfo: PropTypes.object.isRequired,
+    loginHandler: PropTypes.func.isRequired,
+    logoutHandler: PropTypes.func.isRequired
+};
 export default Header;
