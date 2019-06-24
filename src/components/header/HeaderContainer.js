@@ -15,19 +15,23 @@ const login = () => ({
 const failure = () => ({
     type: FAILURE
 });
-const loginSuccess = res => ({
+const loginSuccess = userInfo => ({
     type: LOGIN_SUCCESS,
-    payload: res
+    payload: userInfo
 });
 const loginHandler = () => {
     return dispatch => {
         dispatch(login());
         return _post('/user/login', {
-            username: 'admin',
-            password: 'admin'
+            username: 'wang',
+            password: '123456'
         })
             .then(res => {
-                dispatch(loginSuccess(res));
+                if (res.code !== 0) {
+                    dispatch(failure());
+                    return;
+                }
+                dispatch(loginSuccess(res.userInfo));
             })
             .catch(() => {
                 dispatch(failure());
@@ -38,15 +42,17 @@ const logoutHandler = () => {};
 export const actions = { loginHandler, logoutHandler };
 const headerReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'LOGIN':
+        case LOGIN:
             return {
                 ...state
             };
-        case 'LOGIN_SUCCESS':
+        case LOGIN_SUCCESS:
             return {
-                ...state
+                ...state,
+                userInfo: action.payload,
+                authed: true
             };
-        case 'FAILURE':
+        case FAILURE:
             return {
                 ...state
             };

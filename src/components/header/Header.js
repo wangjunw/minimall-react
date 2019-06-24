@@ -11,9 +11,14 @@ class Header extends React.PureComponent {
                         <img src={avatar} alt="" className="avatar" />
                         <div className="user">
                             {this.props.authed ? (
-                                <p className="log">
-                                    {this.props.userInfo.userName}
-                                    <span onClick={this.props.loginHandler}>
+                                <p>
+                                    <span className="username">
+                                        {this.props.userInfo.username}
+                                    </span>
+                                    <span
+                                        className="log"
+                                        onClick={this.props.loginHandler}
+                                    >
                                         Logout
                                     </span>
                                 </p>
