@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import avatar from '../../static/images/avatar.jpg';
+import cartIcon from '../../static/images/cartIcon.png';
+import { Link } from 'react-router-dom';
 import '../../static/styles/header.scss';
 class Header extends React.PureComponent {
     componentWillMount() {
@@ -36,9 +38,21 @@ class Header extends React.PureComponent {
                                     </span>
                                 </p>
                             )}
-                            <div className="cart">
-                                <span className="cartNum">0</span>
-                            </div>
+                            <Link to="/cart" className="cart">
+                                <img
+                                    src={cartIcon}
+                                    alt=""
+                                    className="cartIcon"
+                                />
+                                {this.props.userInfo.carts &&
+                                this.props.userInfo.carts.length !== 0 ? (
+                                    <span className="cartNum">
+                                        {this.props.userInfo.carts.length}
+                                    </span>
+                                ) : (
+                                    ''
+                                )}
+                            </Link>
                         </div>
                     </div>
                 </div>

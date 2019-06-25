@@ -25,29 +25,30 @@ class GoodsList extends React.PureComponent {
     }
     componentDidMount() {
         this.getGoodsList();
-        window.addEventListener('scroll', e => {
-            if (this.state.loadAll) {
-                return;
-            }
-            if (
-                document.documentElement.scrollTop +
-                    document.documentElement.clientHeight ===
-                document.documentElement.scrollHeight
-            ) {
-                this.setState(
-                    {
-                        page: this.state.page + 1
-                    },
-                    () => {
-                        this.getGoodsList();
-                    }
-                );
-            }
-        });
+        window.addEventListener('scroll', this.loadMore);
     }
     componentWillUnmount() {
-        window.removeEventListener('scroll');
+        window.removeEventListener('scroll', this.loadMore);
     }
+    loadMore = () => {
+        if (this.state.loadAll) {
+            return;
+        }
+        if (
+            document.documentElement.scrollTop +
+                document.documentElement.clientHeight ===
+            document.documentElement.scrollHeight
+        ) {
+            this.setState(
+                {
+                    page: this.state.page + 1
+                },
+                () => {
+                    this.getGoodsList();
+                }
+            );
+        }
+    };
     getGoodsList() {
         this.setState({
             loading: true

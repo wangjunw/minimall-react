@@ -19,6 +19,7 @@
         .user {
             display: flex;
             justify-items: center;
+            color: #605f5f;
             .log {
                 cursor: pointer;
                 margin-left: 15px;
@@ -28,7 +29,26 @@
             }
             .cart {
                 margin-left: 20px;
+                position: relative;
+                padding-right: 14px;
+                cursor: pointer;
+                .cartIcon {
+                    width: 25px;
+                    height: 20px;
+                }
                 .cartNum {
+                    border-radius: 50%;
+                    line-height: 22px;
+                    text-align: center;
+                    background: #eb767d;
+                    color: #fff;
+                    width: 22px;
+                    height: 22px;
+                    font-weight: bold;
+                    font-size: 18px;
+                    position: absolute;
+                    right: 0;
+                    top: -10px;
                 }
             }
         }
