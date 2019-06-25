@@ -19,11 +19,9 @@
         .user {
             display: flex;
             justify-items: center;
-            .username {
-                margin-right: 15px;
-            }
             .log {
                 cursor: pointer;
+                margin-left: 15px;
                 &:hover {
                     color: #d1434a;
                 }

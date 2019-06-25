@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import avatar from '../../static/images/avatar.jpg';
 import '../../static/styles/header.scss';
 class Header extends React.PureComponent {
+    componentWillMount() {
+        this.props.checkLoginHandler();
+    }
     render() {
         return (
             <div>
@@ -17,17 +20,20 @@ class Header extends React.PureComponent {
                                     </span>
                                     <span
                                         className="log"
-                                        onClick={this.props.loginHandler}
+                                        onClick={this.props.logoutHandler}
                                     >
                                         Logout
                                     </span>
                                 </p>
                             ) : (
-                                <p
-                                    onClick={this.props.loginHandler}
-                                    className="log"
-                                >
-                                    Login
+                                <p>
+                                    <span>请登录呦</span>
+                                    <span
+                                        onClick={this.props.loginHandler}
+                                        className="log"
+                                    >
+                                        Login
+                                    </span>
                                 </p>
                             )}
                             <div className="cart">
@@ -44,6 +50,7 @@ Header.propTypes = {
     authed: PropTypes.bool.isRequired,
     userInfo: PropTypes.object.isRequired,
     loginHandler: PropTypes.func.isRequired,
-    logoutHandler: PropTypes.func.isRequired
+    logoutHandler: PropTypes.func.isRequired,
+    checkLoginHandler: PropTypes.func.isRequired
 };
 export default Header;

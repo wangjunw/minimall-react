@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const {
     serverPort,
     hostname,
@@ -15,6 +16,8 @@ const userRoute = require('./routes/users');
 app.use(express.static('static'));
 // 解析body，需要使用body-parser
 app.use(bodyParser.urlencoded({ extended: false }));
+// 解析cookie
+app.use(cookieParser());
 
 // 连接数据库, 第二个参数是解决警告，具体：https://mongoosejs.com/docs/deprecations.html
 mongoose.connect(`mongodb://${hostname}:${mongodbPort}/${dbName}`, {
