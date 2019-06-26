@@ -15,6 +15,9 @@ code {
 li {
     list-style: none;
 }
+table {
+    border-collapse: collapse;
+}
 dd,
 p {
     margin: 0;

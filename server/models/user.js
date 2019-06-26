@@ -7,7 +7,15 @@ let userSchema = new Schema({
     },
     username: String,
     password: String,
-    carts: Array,
+    carts: [
+        {
+            productId: String,
+            productPrice: String,
+            productName: String,
+            productImg: String,
+            productNum: Number
+        }
+    ],
     orders: Array
 });
 module.exports = mongoose.model('User', userSchema);

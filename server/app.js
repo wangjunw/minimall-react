@@ -11,6 +11,7 @@ const {
 } = require('./config/config');
 const goodsRoute = require('./routes/goods');
 const userRoute = require('./routes/users');
+const cartRoute = require('./routes/cart');
 
 // 设置静态资源（注意：请在当前目录下启动app.js，在外层启动会有问题）
 app.use(express.static('static'));
@@ -37,6 +38,7 @@ mongoose.connection.on('disconnected', () => {
 // 路由配置
 app.use('/goods', goodsRoute); //商品接口
 app.use('/user', userRoute);
+app.use('/cart', cartRoute);
 
 // 服务监听端口
 app.listen(serverPort, hostname, () => {

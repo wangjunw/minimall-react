@@ -6,10 +6,12 @@ const LOGOUT = `${key}/LOGOUT`;
 const LOGOUT_SUCCESS = `${key}/LOGOUT_SUCCESS`;
 const CHECKLOGIN = `${key}/CHECKLOGIN`;
 const CHECKLOGIN_SUCCESS = `${key}/CHECKLOGIN_SUCCESS`;
+const CHANGE_CARTNUM = `${key}/CHANGE_CARTNUM`;
 const FAILURE = `${key}/FAILURE`;
 const initialState = {
     userInfo: {},
-    authed: false
+    authed: false,
+    cartNum: 0
 };
 const checkLogin = () => ({
     type: CHECKLOGIN
@@ -30,6 +32,10 @@ const logout = () => ({
 });
 const logoutSuccess = () => ({
     type: LOGOUT_SUCCESS
+});
+export const changeCartNum = num => ({
+    type: CHANGE_CARTNUM,
+    num
 });
 const failure = () => ({
     type: FAILURE
@@ -100,13 +106,15 @@ const headerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userInfo: action.payload,
-                authed: true
+                authed: true,
+                cartNum: action.payload.carts.length
             };
         case CHECKLOGIN_SUCCESS:
             return {
                 ...state,
                 userInfo: action.payload,
-                authed: true
+                authed: true,
+                cartNum: action.payload.carts.length
             };
         case LOGOUT:
             return {
@@ -116,7 +124,13 @@ const headerReducer = (state = initialState, action) => {
             return {
                 ...state,
                 userInfo: {},
-                authed: false
+                authed: false,
+                cartNum: 0
+            };
+        case CHANGE_CARTNUM:
+            return {
+                ...state,
+                cartNum: action.num
             };
         case FAILURE:
             return {

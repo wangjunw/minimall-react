@@ -44,10 +44,9 @@ class Header extends React.PureComponent {
                                     alt=""
                                     className="cartIcon"
                                 />
-                                {this.props.userInfo.carts &&
-                                this.props.userInfo.carts.length !== 0 ? (
+                                {this.props.cartNum !== 0 ? (
                                     <span className="cartNum">
-                                        {this.props.userInfo.carts.length}
+                                        {this.props.cartNum}
                                     </span>
                                 ) : (
                                     ''
@@ -63,6 +62,7 @@ class Header extends React.PureComponent {
 Header.propTypes = {
     authed: PropTypes.bool.isRequired,
     userInfo: PropTypes.object.isRequired,
+    cartNum: PropTypes.number.isRequired,
     loginHandler: PropTypes.func.isRequired,
     logoutHandler: PropTypes.func.isRequired,
     checkLoginHandler: PropTypes.func.isRequired

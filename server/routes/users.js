@@ -59,6 +59,7 @@ router.post('/login', async (req, res) => {
         }
     });
 });
+// 登出
 router.post('/logout', (req, res) => {
     res.cookie('uid', '', { path: '/', maxAge: -1 });
     res.json({
@@ -66,4 +67,5 @@ router.post('/logout', (req, res) => {
         message: 'logout success'
     });
 });
+
 module.exports = router;
