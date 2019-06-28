@@ -46,7 +46,7 @@ router.post('/login', async (req, res) => {
         return;
     }
     // 将用户登录状态存在cookie中
-    res.cookie('uid', user.uid, { path: '/', maxAge: 1000 * 60 * 5 });
+    res.cookie('uid', user.uid, { path: '/', maxAge: 1000 * 60 * 60 });
     // 存在session中
     // req.session.user = user;
     res.json({
