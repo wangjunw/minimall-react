@@ -32,14 +32,9 @@ class Order extends React.PureComponent {
             if (res.code !== 0) {
                 return;
             }
-            this.setState(
-                {
-                    orderDetail: res.data
-                },
-                () => {
-                    console.log(this.state.orderDetail);
-                }
-            );
+            this.setState({
+                orderDetail: res.data
+            });
         });
     }
     selectAddress = index => {

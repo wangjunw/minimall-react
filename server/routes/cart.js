@@ -107,7 +107,11 @@ router.post('/createOrder', async (req, res) => {
                         }
                     },
                     err => {
-                        console.log(err);
+                        res.json({
+                            code: -1,
+                            message: err
+                        });
+                        return;
                     }
                 );
             }
