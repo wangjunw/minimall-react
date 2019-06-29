@@ -2,11 +2,14 @@ import React from 'react';
 import { _get, _post } from '../../utils/request';
 import '../../static/styles/cart.scss';
 import CountCom from '../../components/countComp';
+import PropTypes from 'prop-types';
 class Cart extends React.PureComponent {
     constructor() {
         super();
         this.state = {
-            cartList: []
+            cartList: [],
+            totalPrice: 0,
+            allChecked: false
         };
     }
     componentWillMount() {
@@ -18,17 +21,26 @@ class Cart extends React.PureComponent {
                 alert(res.message);
                 return;
             }
+            let result = [];
+            res.data.map(item => {
+                return result.push(Object.assign({}, item, { checked: false }));
+            });
             this.setState({
-                cartList: res.data
+                cartList: result
             });
         });
     }
     changeCountHandler = (index, count) => {
         let newCartList = [...this.state.cartList];
         newCartList[index].productNum = count;
-        this.setState({
-            cartList: newCartList
-        });
+        this.setState(
+            {
+                cartList: newCartList
+            },
+            () => {
+                this.calculateHandler();
+            }
+        );
     };
     deleteHandler = (index, id) => {
         /* eslint-disable */
@@ -40,11 +52,72 @@ class Cart extends React.PureComponent {
                 }
                 let newCartList = [...this.state.cartList];
                 newCartList.splice(index, 1);
-                this.setState({
-                    cartList: newCartList
-                });
+                this.setState(
+                    {
+                        cartList: newCartList
+                    },
+                    () => {
+                        this.calculateHandler();
+                    }
+                );
             });
         }
+    };
+    // 勾选
+    checkHandler = index => {
+        let result = [...this.state.cartList];
+        result[index].checked = !result[index].checked;
+        let allChecked = true;
+        result.forEach(item => {
+            if (!item.checked) {
+                allChecked = false;
+                return;
+            }
+        });
+        this.setState({ cartList: result, allChecked }, () => {
+            this.calculateHandler();
+        });
+    };
+    // 全选
+    allCheckHandler = () => {
+        let result = [...this.state.cartList];
+        result.forEach(item => {
+            item.checked = !this.state.allChecked;
+        });
+        this.setState(
+            {
+                cartList: result,
+                allChecked: !this.state.allChecked
+            },
+            () => {
+                this.calculateHandler();
+            }
+        );
+    };
+    // 计算总价
+    calculateHandler = () => {
+        let totalPrice = 0;
+        this.state.cartList.forEach(item => {
+            if (item.checked) {
+                totalPrice += item.productNum * item.productPrice;
+            }
+        });
+        this.setState({ totalPrice: totalPrice });
+    };
+    //创建订单
+    createOrderHandler = () => {
+        let goodsList = this.state.cartList.filter(item => {
+            return item.checked;
+        });
+        _post('/cart/createOrder', {
+            totalPrice: this.state.totalPrice,
+            goodsList: JSON.stringify(goodsList)
+        }).then(res => {
+            if (res.code !== 0) {
+                return;
+            }
+            this.props.history.push('/order', { orderId: res.orderId });
+        });
     };
     render() {
         return (
@@ -56,7 +129,7 @@ class Cart extends React.PureComponent {
                             <td>GOODS</td>
                             <td>PRICE</td>
                             <td>QUANTITY</td>
-                            <td>TOTAL PRICE</td>
+                            <td>ITEM TOTAL</td>
                             <td>OPERATE</td>
                         </tr>
                     </thead>
@@ -67,6 +140,10 @@ class Cart extends React.PureComponent {
                                     <input
                                         type="checkbox"
                                         className="checkbox"
+                                        onChange={() => {
+                                            this.checkHandler(index);
+                                        }}
+                                        checked={item.checked}
                                     />
                                     <img
                                         alt=""
@@ -106,11 +183,33 @@ class Cart extends React.PureComponent {
                         ))}
                     </tbody>
                 </table>
-                <div>
-                    <button>BUY</button>
+                <div className="foot">
+                    <div className="selectAll">
+                        <input
+                            type="checkbox"
+                            className="checkbox"
+                            onChange={this.allCheckHandler}
+                            checked={this.state.allChecked}
+                        />
+                        <span>Select All</span>
+                    </div>
+                    <div className="total">
+                        <p>
+                            Total Price：
+                            <span className="totalPrice">
+                                {this.state.totalPrice.toFixed(2)}
+                            </span>
+                        </p>
+                        <button onClick={this.createOrderHandler}>
+                            CreateOrder
+                        </button>
+                    </div>
                 </div>
             </div>
         );
     }
 }
+Cart.propTypes = {
+    history: PropTypes.object.isRequired
+};
 export default Cart;

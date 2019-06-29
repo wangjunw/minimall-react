@@ -13,7 +13,9 @@ class Header extends React.PureComponent {
             <div>
                 <div className="headerContainer">
                     <div className="content">
-                        <img src={avatar} alt="" className="avatar" />
+                        <Link to="/">
+                            <img src={avatar} alt="" className="avatar" />
+                        </Link>
                         <div className="user">
                             {this.props.authed ? (
                                 <p>

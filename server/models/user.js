@@ -16,6 +16,13 @@ let userSchema = new Schema({
             productNum: Number
         }
     ],
-    orders: Array
+    orders: [
+        {
+            orderId: String,
+            goodsList: Array,
+            createTime: String,
+            totalPrice: Number
+        }
+    ]
 });
 module.exports = mongoose.model('User', userSchema);

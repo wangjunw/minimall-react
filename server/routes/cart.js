@@ -70,4 +70,47 @@ router.post('/delete', async (req, res) => {
         }
     );
 });
+
+// 创建订单接口
+router.post('/createOrder', async (req, res) => {
+    let uid = req.cookies.uid;
+    let { totalPrice, goodsList } = req.body;
+    let goodsListObj = JSON.parse(goodsList);
+    let user = await User.findOne({ uid });
+    if (!user) {
+        res.json({
+            code: -1,
+            message: 'who are you？'
+        });
+    }
+    let createTime = new Date().getTime(),
+        orderId = uid + createTime;
+    user.save();
+    // 订单创建成功之后，把购物车里商品删除
+    user.orders.push({ orderId, totalPrice, createTime, goodsListObj });
+    for (let i of goodsListObj) {
+        for (let j of user.carts) {
+            if (i.productId === j.productId) {
+                User.updateOne(
+                    { uid },
+                    {
+                        $pull: {
+                            carts: {
+                                productId: i.productId
+                            }
+                        }
+                    },
+                    err => {
+                        console.log(err);
+                    }
+                );
+            }
+        }
+    }
+    res.json({
+        code: 0,
+        message: 'create success！',
+        orderId
+    });
+});
 module.exports = router;
