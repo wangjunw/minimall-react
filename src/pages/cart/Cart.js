@@ -42,6 +42,7 @@ class Cart extends React.PureComponent {
             }
         );
     };
+    // 删除
     deleteHandler = (index, id) => {
         /* eslint-disable */
         let result = confirm('确认删除该商品？');
@@ -58,6 +59,7 @@ class Cart extends React.PureComponent {
                     },
                     () => {
                         this.calculateHandler();
+                        this.props.changeCartNum(this.state.cartList.length);
                     }
                 );
             });
@@ -109,6 +111,9 @@ class Cart extends React.PureComponent {
         let goodsList = this.state.cartList.filter(item => {
             return item.checked;
         });
+        if (goodsList.length === 0) {
+            return;
+        }
         _post('/cart/createOrder', {
             totalPrice: this.state.totalPrice,
             goodsList: JSON.stringify(goodsList)
@@ -116,6 +121,7 @@ class Cart extends React.PureComponent {
             if (res.code !== 0) {
                 return;
             }
+            this.props.changeCartNum(res.cartNum);
             this.props.history.push('/order', { orderId: res.orderId });
         });
     };
@@ -197,7 +203,7 @@ class Cart extends React.PureComponent {
                         <p>
                             Total Price：
                             <span className="totalPrice">
-                                {this.state.totalPrice.toFixed(2)}
+                                ￥{this.state.totalPrice.toFixed(2)}
                             </span>
                         </p>
                         <button onClick={this.createOrderHandler}>
@@ -210,6 +216,7 @@ class Cart extends React.PureComponent {
     }
 }
 Cart.propTypes = {
-    history: PropTypes.object.isRequired
+    history: PropTypes.object.isRequired,
+    changeCartNum: PropTypes.func.isRequired
 };
 export default Cart;

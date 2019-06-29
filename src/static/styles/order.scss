@@ -1,0 +1,99 @@
+.orderContainer {
+    width: 1280px;
+    margin: 0 auto;
+    .addressList {
+        overflow: hidden;
+        margin-right: -20px;
+        .addressItem {
+            border: 2px solid #e9e9e9;
+            cursor: pointer;
+            width: 300px;
+            height: 162px;
+            margin: 0 20px 20px 0;
+            float: left;
+            padding: 15px;
+            box-sizing: border-box;
+            background-color: #fff;
+            position: relative;
+            &.actived {
+                border-color: #ee7a23;
+            }
+            &:hover {
+                border-color: #ee7a23;
+            }
+            .recipient {
+                margin-bottom: 7px;
+            }
+            .address {
+                margin-bottom: 24px;
+                font-size: 14px;
+            }
+            .defalut {
+                display: inline-block;
+                color: #36c;
+                margin-top: 10px;
+                font-size: 14px;
+            }
+            .delete {
+                position: absolute;
+                right: 15px;
+                bottom: 16px;
+                color: #ee7a23;
+            }
+        }
+    }
+    .goodsList {
+        width: 100%;
+        margin-bottom: 20px;
+        border: solid 1px #ccc;
+        background: #fff;
+        text-align: center;
+        thead {
+            color: #fff;
+            background-color: #605f5f;
+            tr {
+                height: 40px;
+            }
+        }
+        tbody {
+            tr {
+                width: 100%;
+                border-bottom: solid 1px #e9e9e9;
+                .goodsItem {
+                    display: flex;
+                    align-items: center;
+                    padding-left: 40px;
+                    .goodsPic {
+                        width: 78px;
+                        height: 78px;
+                        margin: 15px;
+                        border: solid 1px #e9e9e9;
+                    }
+                }
+                .subTotal {
+                    color: #d1434a;
+                }
+            }
+        }
+    }
+    .foot {
+        text-align: right;
+        .price {
+            font-size: 26px;
+            color: #ff0036;
+            font-weight: 700;
+        }
+        .confirmBuy {
+            margin: 20px 0;
+            background-color: #ff0036;
+            color: #fff;
+            border: none;
+            outline: none;
+            height: 55px;
+            width: 150px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    }
+}

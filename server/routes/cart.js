@@ -87,7 +87,13 @@ router.post('/createOrder', async (req, res) => {
         orderId = uid + createTime;
     user.save();
     // 订单创建成功之后，把购物车里商品删除
-    user.orders.push({ orderId, totalPrice, createTime, goodsListObj });
+    user.orders.push({
+        orderId,
+        totalPrice,
+        createTime,
+        goodsList: goodsListObj,
+        status: 0
+    });
     for (let i of goodsListObj) {
         for (let j of user.carts) {
             if (i.productId === j.productId) {
@@ -107,10 +113,12 @@ router.post('/createOrder', async (req, res) => {
             }
         }
     }
+    let resentUser = await User.findOne({ uid });
     res.json({
         code: 0,
         message: 'create success！',
-        orderId
+        orderId,
+        cartNum: resentUser.carts.length
     });
 });
 module.exports = router;

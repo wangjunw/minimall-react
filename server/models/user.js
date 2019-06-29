@@ -7,6 +7,14 @@ let userSchema = new Schema({
     },
     username: String,
     password: String,
+    addresses: [
+        {
+            recipient: String,
+            mobile: String,
+            address: String,
+            isDefault: Boolean
+        }
+    ],
     carts: [
         {
             productId: String,
@@ -21,7 +29,8 @@ let userSchema = new Schema({
             orderId: String,
             goodsList: Array,
             createTime: String,
-            totalPrice: Number
+            totalPrice: Number,
+            status: Number
         }
     ]
 });
