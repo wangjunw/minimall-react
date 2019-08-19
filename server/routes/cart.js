@@ -28,6 +28,7 @@ router.post('/changeNum', async (req, res) => {
             code: -1,
             message: 'who are you？'
         });
+        return;
     }
     user.carts.forEach(item => {
         if (item.productId === productId) {
@@ -82,6 +83,7 @@ router.post('/createOrder', async (req, res) => {
             code: -1,
             message: 'who are you？'
         });
+        return;
     }
     let createTime = new Date().getTime(),
         orderId = uid + createTime;
@@ -107,11 +109,13 @@ router.post('/createOrder', async (req, res) => {
                         }
                     },
                     err => {
-                        res.json({
-                            code: -1,
-                            message: err
-                        });
-                        return;
+                        if (err) {
+                            res.json({
+                                code: -1,
+                                message: err
+                            });
+                            return;
+                        }
                     }
                 );
             }
